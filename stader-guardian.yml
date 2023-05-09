@@ -1,0 +1,22 @@
+version: "3.9"
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100m
+      max-file: "3"
+      tag: '{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}'
+
+services:
+  stader-guardian:
+    restart: "unless-stopped"
+    image: stader-guardian:${STADER_DOCKER_TAG}
+    container_name: stader-guardian
+    stdin_open: true
+    tty: true
+    stop_signal: SIGINT
+    environment:
+      - ExecutionHost=${ExecutionHost}
+      - ConsensusHost=${ConsensusHost}
+      - PrivateKey=${PrivateKey}
+    <<: *logging
