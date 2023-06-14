@@ -11,12 +11,12 @@ services:
   stader-guardian:
     restart: "unless-stopped"
     image: stader-guardian:${STADER_DOCKER_TAG}
-    container_name: stader-guardian
+    container_name: ${ContainerName:-stader-guardian}
     stdin_open: true
-    tty: true
     stop_signal: SIGINT
     environment:
       - ExecutionHost=${ExecutionHost}
       - ConsensusHost=${ConsensusHost}
       - PrivateKey=${PrivateKey}
+      - ChainId=${ChainId}
     <<: *logging
